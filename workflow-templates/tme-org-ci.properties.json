@@ -1,0 +1,13 @@
+{
+    "name": "TMETEST Organization CI Workflow",
+    "description": "TMETEST Organization CI workflow template.",
+    "iconName": "example-icon",
+    "categories": [
+        "Go"
+    ],
+    "filePatterns": [
+        "package.json$",
+        "^Dockerfile",
+        ".*\\.md$"
+    ]
+}

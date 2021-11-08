@@ -1,0 +1,46 @@
+ame: TME Organization CI
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run a one-line script
+        run: echo "Welcome to TEST"
+      
+      - name: build application
+        run: mvn install
+  ticket:
+    runs-on: ubuntu-latest
+    steps:
+      - name: jira login
+        uses: atlassian/gajira-login@v2.0.0
+        env:
+            JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+            JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+            JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+      - name: create jira issue
+        uses: atlassian/gajira-create@v2.0.1
+        with:
+          project: 'TEST'
+          issuetype: 'Story'
+          summary: 'Created by Github'
+          description: 'Çreated by Github after Build'
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Publishing
+        run: echo Hello from Octo Organization
+      
+      - name: build application
+        run: mvn deploy
